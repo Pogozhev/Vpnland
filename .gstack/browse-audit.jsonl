@@ -1,0 +1,14 @@
+{"ts":"2026-05-04T07:48:00.299Z","cmd":"goto","args":"http://localhost:8765","origin":"http://localhost:8765/","durationMs":698,"status":"ok","hasCookies":false,"mode":"launched"}
+{"ts":"2026-05-04T07:48:05.315Z","cmd":"screenshot","args":"/tmp/honkvpn-hero.png","origin":"http://localhost:8765/","durationMs":193,"status":"ok","hasCookies":false,"mode":"launched"}
+{"ts":"2026-05-04T07:48:26.623Z","cmd":"scroll","args":"#why","origin":"http://localhost:8765/","durationMs":2,"status":"ok","hasCookies":false,"mode":"launched"}
+{"ts":"2026-05-04T07:48:26.703Z","cmd":"screenshot","args":"/tmp/honkvpn-why.png --viewport","origin":"http://localhost:8765/","durationMs":36,"status":"ok","hasCookies":false,"mode":"launched"}
+{"ts":"2026-05-04T07:48:30.216Z","cmd":"js","args":"document.getElementById('why').scrollIntoView({behavior: 'instant'})","origin":"http://localhost:8765/","durationMs":7,"status":"ok","hasCookies":false,"mode":"launched"}
+{"ts":"2026-05-04T07:48:30.299Z","cmd":"screenshot","args":"/tmp/honkvpn-why2.png --viewport","origin":"http://localhost:8765/","durationMs":24,"status":"ok","hasCookies":false,"mode":"launched"}
+{"ts":"2026-05-04T07:48:38.800Z","cmd":"js","args":"document.getElementById('what').scrollIntoView({behavior: 'instant'})","origin":"http://localhost:8765/","durationMs":1,"status":"ok","hasCookies":false,"mode":"launched"}
+{"ts":"2026-05-04T07:48:38.863Z","cmd":"screenshot","args":"/tmp/honkvpn-features.png --viewport","origin":"http://localhost:8765/","durationMs":21,"status":"ok","hasCookies":false,"mode":"launched"}
+{"ts":"2026-05-04T07:48:42.398Z","cmd":"js","args":"document.getElementById('tariffs').scrollIntoView({behavior: 'instant'})","origin":"http://localhost:8765/","durationMs":1,"status":"ok","hasCookies":false,"mode":"launched"}
+{"ts":"2026-05-04T07:48:42.466Z","cmd":"screenshot","args":"/tmp/honkvpn-tariffs.png --viewport","origin":"http://localhost:8765/","durationMs":29,"status":"ok","hasCookies":false,"mode":"launched"}
+{"ts":"2026-05-04T07:49:00.829Z","cmd":"js","args":"document.getElementById('how').scrollIntoView({behavior: 'instant'})","origin":"http://localhost:8765/","durationMs":2,"status":"ok","hasCookies":false,"mode":"launched"}
+{"ts":"2026-05-04T07:49:00.904Z","cmd":"screenshot","args":"/tmp/honkvpn-steps.png --viewport","origin":"http://localhost:8765/","durationMs":27,"status":"ok","hasCookies":false,"mode":"launched"}
+{"ts":"2026-05-04T07:49:01.595Z","cmd":"responsive","args":"/tmp/honkvpn-resp","origin":"http://localhost:8765/","durationMs":478,"status":"ok","hasCookies":false,"mode":"launched"}
+{"ts":"2026-05-04T07:49:29.637Z","cmd":"console","args":"--errors","origin":"http://localhost:8765/","durationMs":0,"status":"ok","hasCookies":false,"mode":"launched"}

@@ -84,7 +84,7 @@ form?.addEventListener('submit', async (e) => {
       await new Promise((r) => setTimeout(r, 600));
     }
 
-    btn.textContent = 'Заявка отправлена ✓';
+    btn.textContent = 'Заявка отправлена';
     if (formStatus) formStatus.textContent = 'Спасибо! Мы свяжемся с вами в течение 30 минут.';
     form.reset();
   } catch {
@@ -112,4 +112,27 @@ if (cookieBanner) {
     } catch {}
     cookieBanner.hidden = true;
   });
+}
+
+const revealElements = document.querySelectorAll('.reveal');
+if (revealElements.length) {
+  const staggerContainers = document.querySelectorAll('.features-grid, .tariffs__grid, .steps, .why-list');
+  staggerContainers.forEach((container) => {
+    container.querySelectorAll('.reveal').forEach((el, i) => {
+      el.style.transitionDelay = i * 80 + 'ms';
+    });
+  });
+
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    },
+    { threshold: 0.08, rootMargin: '0px 0px -32px 0px' }
+  );
+  revealElements.forEach((el) => observer.observe(el));
 }

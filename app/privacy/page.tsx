@@ -1,36 +1,14 @@
-<!DOCTYPE html>
-<html lang="ru">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="robots" content="noindex" />
-  <title>Политика обработки персональных данных — HonkVPN</title>
-  <link rel="stylesheet" href="styles.css" />
-  <style>
-    .legal { padding: 80px 0; }
-    .legal .container { max-width: 820px; }
-    .legal h1 { font-size: 32px; margin: 0 0 24px; letter-spacing: -0.5px; }
-    .legal h2 { font-size: 20px; margin: 32px 0 12px; }
-    .legal p, .legal li { color: #cfd5e3; font-size: 15px; }
-    .legal ul, .legal ol { padding-left: 22px; }
-    .legal a { color: var(--primary-2); text-decoration: underline; }
-    .legal__back { display: inline-block; margin-bottom: 24px; color: var(--muted); }
-  </style>
-</head>
-<body>
-  <header class="nav">
-    <div class="container nav__inner">
-      <a href="index.html" class="brand">
-        <span class="brand__logo">⛨</span>
-        <span class="brand__name">Honk<span>VPN</span></span>
-      </a>
-      <a href="index.html" class="btn btn--ghost btn--sm">На главную</a>
-    </div>
-  </header>
+import type { Metadata } from 'next';
+import LegalLayout from '@/components/LegalLayout';
 
-  <main class="legal">
-    <div class="container">
-      <a href="index.html" class="legal__back">← Вернуться</a>
+export const metadata: Metadata = {
+  title: 'Политика обработки персональных данных — HonkVPN',
+  robots: { index: false, follow: false },
+};
+
+export default function PrivacyPage() {
+  return (
+    <LegalLayout>
       <h1>Политика обработки персональных данных</h1>
       <p><em>Редакция от [ДАТА]. Действует с момента публикации на сайте.</em></p>
 
@@ -43,7 +21,7 @@
       <p>
         Политика разработана в соответствии с Федеральным законом от 27.07.2006 № 152-ФЗ
         «О персональных данных» и применяется ко всей информации, которую Оператор может получить
-        о посетителях сайта <a href="https://pogozhev.github.io/vpnland/">pogozhev.github.io/vpnland/</a>.
+        о посетителях сайта.
       </p>
 
       <h2>2. Какие данные мы обрабатываем</h2>
@@ -52,9 +30,11 @@
         <li>Контакты: номер телефона и/или Telegram-логин, e-mail.</li>
         <li>Выбранный тариф франшизы.</li>
         <li>Технические данные: IP-адрес, тип устройства и браузера, cookie-идентификаторы, страницы посещения, реферер.</li>
-        <li>Платёжные данные обрабатываются исключительно платёжной системой
-          <a href="https://cloudpayments.ru/" target="_blank" rel="noopener">CloudPayments</a>
-          (PCI DSS Level 1) и не сохраняются на стороне Оператора.</li>
+        <li>
+          Платёжные данные обрабатываются исключительно платёжной системой{' '}
+          <a href="https://cloudpayments.ru/" target="_blank" rel="noopener">CloudPayments</a>{' '}
+          (PCI DSS Level 1) и не сохраняются на стороне Оператора.
+        </li>
       </ul>
 
       <h2>3. Цели обработки</h2>
@@ -69,8 +49,8 @@
       <h2>4. Правовые основания</h2>
       <p>
         Обработка осуществляется на основании согласия пользователя (ст. 6 ч.1 п.1 152-ФЗ),
-        выраженного через отправку формы на сайте, а также для исполнения договора, стороной которого
-        является пользователь (ст. 6 ч.1 п.5 152-ФЗ).
+        выраженного через отправку формы на сайте, а также для исполнения договора, стороной
+        которого является пользователь (ст. 6 ч.1 п.5 152-ФЗ).
       </p>
 
       <h2>5. Сроки и условия обработки</h2>
@@ -84,16 +64,15 @@
       <p>Данные могут передаваться:</p>
       <ul>
         <li>платёжному сервису CloudPayments — для проведения платежей;</li>
-        <li>сервису обработки заявок (например, Formspree, Tally или CRM) — для приёма лида;</li>
-        <li>Telegram — если пользователь сам указывает контакт через мессенджер;</li>
+        <li>Telegram — для оперативного уведомления Оператора о заявке;</li>
         <li>государственным органам РФ — в случаях, установленных законом.</li>
       </ul>
 
       <h2>7. Cookie и аналитика</h2>
       <p>
         Сайт использует cookie для корректной работы интерфейса и сбора обезличенной статистики.
-        Пользователь может отключить cookie в настройках браузера; в этом случае часть функций сайта
-        может работать некорректно.
+        Пользователь может отключить cookie в настройках браузера; в этом случае часть функций
+        сайта может работать некорректно.
       </p>
 
       <h2>8. Меры защиты</h2>
@@ -107,33 +86,12 @@
       <h2>9. Права пользователя</h2>
       <p>
         Пользователь вправе запросить информацию об обрабатываемых данных, их уточнение или
-        удаление, а также отозвать согласие на обработку. Заявления направляются на e-mail Оператора:
-        <a href="mailto:[EMAIL]">[EMAIL]</a>.
+        удаление, а также отозвать согласие на обработку. Заявления направляются на e-mail
+        Оператора: <a href="mailto:[EMAIL]">[EMAIL]</a>.
       </p>
 
       <h2>10. Изменения политики</h2>
-      <p>
-        Оператор вправе изменять настоящую политику. Актуальная редакция всегда доступна по адресу
-        <a href="privacy.html">/privacy.html</a>.
-      </p>
-    </div>
-  </main>
-
-  <footer class="footer">
-    <div class="container footer__inner">
-      <div class="brand">
-        <span class="brand__logo">⛨</span>
-        <span class="brand__name">Honk<span>VPN</span></span>
-      </div>
-      <p class="footer__copy">© <span id="year"></span> HonkVPN.</p>
-      <div class="footer__links">
-        <a href="index.html#tariffs">Тарифы</a>
-        <a href="offer.html">Оферта</a>
-        <a href="index.html#contact">Контакты</a>
-      </div>
-    </div>
-  </footer>
-
-  <script>document.getElementById('year').textContent = new Date().getFullYear();</script>
-</body>
-</html>
+      <p>Оператор вправе изменять настоящую политику. Актуальная редакция всегда доступна по адресу <a href="/privacy">/privacy</a>.</p>
+    </LegalLayout>
+  );
+}

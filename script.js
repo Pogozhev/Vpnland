@@ -73,7 +73,7 @@ form?.addEventListener('submit', async (e) => {
   btn.textContent = 'Отправляем...';
 
   try {
-    if (action && !action.includes('YOUR_FORM_ID')) {
+    if (action && !action.includes('YOUR_WORKER')) {
       const res = await fetch(action, {
         method: 'POST',
         headers: { Accept: 'application/json' },

@@ -5,9 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="description" content="HonkVPN — франшиза VPN-бизнеса под ключ: VPN, Telegram-бот, лендинг, админка и сопровождение от команды." />
   <title>HonkVPN — франшиза VPN-бизнеса под ключ</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
@@ -317,7 +314,8 @@
           <h2>Готовы запустить VPN-бизнес?</h2>
           <p>Оставьте заявку — свяжемся в течение 30 минут и поможем выбрать тариф.</p>
         </div>
-        <form class="cta__form" id="leadForm" action="https://formspree.io/f/YOUR_FORM_ID" method="POST" novalidate>
+        <form class="cta__form" id="leadForm" action="https://YOUR_WORKER.workers.dev" method="POST" novalidate>
+          <input type="text" name="_gotcha" tabindex="-1" autocomplete="off" style="position:absolute;left:-9999px;width:1px;height:1px;opacity:0" aria-hidden="true" />
           <label class="field">
             <span>Имя</span>
             <input type="text" name="name" autocomplete="name" required placeholder="Как к вам обращаться" />

@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="Франшиза VPN-бизнеса под ключ: VPN, Telegram-бот, лендинг, админка и сопровождение от команды." />
-  <title>VPNLand — франшиза VPN-бизнеса под ключ</title>
+  <meta name="description" content="HonkVPN — франшиза VPN-бизнеса под ключ: VPN, Telegram-бот, лендинг, админка и сопровождение от команды." />
+  <title>HonkVPN — франшиза VPN-бизнеса под ключ</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -15,7 +15,7 @@
     <div class="container nav__inner">
       <a href="#" class="brand">
         <span class="brand__logo">⛨</span>
-        <span class="brand__name">VPN<span>Land</span></span>
+        <span class="brand__name">Honk<span>VPN</span></span>
       </a>
       <nav class="nav__links">
         <a href="#why">Почему VPN</a>
@@ -183,7 +183,10 @@
               <li>Базовое подключение платежей <span class="muted">(комиссия выше)</span></li>
               <li>Документация по запуску</li>
             </ul>
-            <a href="#contact" class="btn btn--ghost btn--block">Выбрать «Базовый»</a>
+            <div class="tariff__actions">
+              <button type="button" class="btn btn--primary btn--block" data-pay data-amount="29900" data-description="Франшиза HonkVPN — тариф «Базовый»">Оплатить</button>
+              <a href="#contact" class="btn btn--ghost btn--block">Сначала консультация</a>
+            </div>
           </article>
 
           <article class="tariff tariff--featured">
@@ -203,13 +206,16 @@
               <li>Сниженная цена обработки платежей</li>
               <li>Методичка по привлечению клиентов</li>
             </ul>
-            <a href="#contact" class="btn btn--primary btn--block">Выбрать «Средний»</a>
+            <div class="tariff__actions">
+              <button type="button" class="btn btn--primary btn--block" data-pay data-amount="79900" data-description="Франшиза HonkVPN — тариф «Средний»">Оплатить</button>
+              <a href="#contact" class="btn btn--ghost btn--block">Сначала консультация</a>
+            </div>
           </article>
 
           <article class="tariff tariff--gold">
             <header class="tariff__head">
-              <h3 class="tariff__name">Золотой унитаз</h3>
-              <p class="tariff__sub">VIP-сопровождение «под ключ»</p>
+              <h3 class="tariff__name">VIP</h3>
+              <p class="tariff__sub">Сопровождение «под ключ»</p>
             </header>
             <div class="tariff__price">
               <span class="tariff__amount">300 000 ₽</span>
@@ -221,7 +227,10 @@
               <li>Стратегия привлечения под ваш регион</li>
               <li>Прямой контакт с техдиректором</li>
             </ul>
-            <a href="#contact" class="btn btn--gold btn--block">Хочу VIP</a>
+            <div class="tariff__actions">
+              <button type="button" class="btn btn--gold btn--block" data-pay data-amount="300000" data-description="Франшиза HonkVPN — тариф «VIP»">Оплатить</button>
+              <a href="#contact" class="btn btn--ghost btn--block">Сначала консультация</a>
+            </div>
           </article>
         </div>
 
@@ -236,6 +245,12 @@
             <a href="#contact" class="btn btn--ghost">Записаться</a>
           </div>
         </div>
+
+        <p class="legal-note">
+          Оплата производится через сертифицированный платёжный сервис
+          <a href="https://cloudpayments.ru/" target="_blank" rel="noopener noreferrer">CloudPayments</a>
+          по защищённому протоколу. Реквизиты карты не передаются и не хранятся на нашем сайте.
+        </p>
       </div>
     </section>
 
@@ -286,7 +301,7 @@
           </details>
           <details class="faq__item">
             <summary>Можно ли выйти на зарубежный рынок?</summary>
-            <p>Да, инфраструктура поддерживает мультивалютность и серверы в разных регионах. Это обсуждается на «Золотом унитазе».</p>
+            <p>Да, инфраструктура поддерживает мультивалютность и серверы в разных регионах. Это обсуждается на тарифе VIP.</p>
           </details>
           <details class="faq__item">
             <summary>Что, если у меня уже есть VPN-проект?</summary>
@@ -302,26 +317,35 @@
           <h2>Готовы запустить VPN-бизнес?</h2>
           <p>Оставьте заявку — свяжемся в течение 30 минут и поможем выбрать тариф.</p>
         </div>
-        <form class="cta__form" id="leadForm" novalidate>
+        <form class="cta__form" id="leadForm" action="https://formspree.io/f/YOUR_FORM_ID" method="POST" novalidate>
           <label class="field">
             <span>Имя</span>
-            <input type="text" name="name" required placeholder="Как к вам обращаться" />
+            <input type="text" name="name" autocomplete="name" required placeholder="Как к вам обращаться" />
           </label>
           <label class="field">
             <span>Telegram или телефон</span>
-            <input type="text" name="contact" required placeholder="@username или +7 ..." />
+            <input type="text" name="contact" autocomplete="tel" required placeholder="@username или +7 ..." />
           </label>
           <label class="field">
             <span>Тариф</span>
             <select name="tariff">
               <option>Базовый — 29 900 ₽</option>
               <option selected>Средний — 79 900 ₽</option>
-              <option>Золотой унитаз — 300 000 ₽</option>
+              <option>VIP — 300 000 ₽</option>
               <option>Консультация техдиректора — 1 500 $</option>
             </select>
           </label>
+          <label class="field field--check">
+            <input type="checkbox" name="consent" required />
+            <span>
+              Я согласен с
+              <a href="privacy.html" target="_blank" rel="noopener">политикой обработки персональных данных</a>
+              и
+              <a href="offer.html" target="_blank" rel="noopener">офертой</a>.
+            </span>
+          </label>
           <button class="btn btn--primary btn--block" type="submit">Отправить заявку</button>
-          <p class="cta__note">Нажимая на кнопку, вы соглашаетесь с обработкой персональных данных.</p>
+          <p class="cta__note" id="formStatus">Обычно отвечаем в течение 30 минут.</p>
         </form>
       </div>
     </section>
@@ -331,17 +355,31 @@
     <div class="container footer__inner">
       <div class="brand">
         <span class="brand__logo">⛨</span>
-        <span class="brand__name">VPN<span>Land</span></span>
+        <span class="brand__name">Honk<span>VPN</span></span>
       </div>
-      <p class="footer__copy">© <span id="year"></span> VPNLand. Все права защищены.</p>
+      <p class="footer__copy">© <span id="year"></span> HonkVPN. Все права защищены.</p>
       <div class="footer__links">
         <a href="#tariffs">Тарифы</a>
         <a href="#faq">FAQ</a>
         <a href="#contact">Контакты</a>
+        <a href="privacy.html">Политика конфиденциальности</a>
+        <a href="offer.html">Оферта</a>
       </div>
     </div>
   </footer>
 
+  <div class="cookie" id="cookieBanner" hidden>
+    <div class="container cookie__inner">
+      <p>
+        Мы используем cookie для корректной работы сайта и аналитики посещаемости.
+        Продолжая пользоваться сайтом, вы соглашаетесь с
+        <a href="privacy.html">политикой обработки персональных данных</a>.
+      </p>
+      <button type="button" class="btn btn--primary btn--sm" id="cookieAccept">Принять</button>
+    </div>
+  </div>
+
+  <script src="https://widget.cloudpayments.ru/bundles/cloudpayments.js"></script>
   <script src="script.js"></script>
 </body>
 </html>

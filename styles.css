@@ -26,6 +26,12 @@ html {
   scroll-behavior: smooth;
 }
 
+html,
+body {
+  overflow-x: hidden;
+  max-width: 100%;
+}
+
 body {
   margin: 0;
   background: var(--bg);
@@ -255,7 +261,7 @@ a {
   position: relative;
   justify-self: center;
   width: 100%;
-  max-width: 420px;
+  max-width: min(420px, 100%);
 }
 .card-glow {
   position: absolute;
@@ -541,6 +547,28 @@ a {
   border-color: var(--gold);
 }
 
+.tariff__actions {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.tariff__actions .btn {
+  white-space: normal;
+  line-height: 1.2;
+}
+
+.legal-note {
+  margin: 28px auto 0;
+  max-width: 720px;
+  text-align: center;
+  font-size: 13px;
+  color: var(--muted);
+}
+.legal-note a {
+  color: var(--primary-2);
+  text-decoration: underline;
+}
+
 /* === Addon (consultation) === */
 .addon {
   margin-top: 50px;
@@ -720,6 +748,9 @@ a {
 }
 .field input,
 .field select {
+  width: 100%;
+  min-width: 0;
+  max-width: 100%;
   background: var(--bg-2);
   border: 1px solid var(--border);
   color: var(--text);
@@ -728,6 +759,34 @@ a {
   font-size: 15px;
   font-family: inherit;
   transition: border-color 0.15s ease, background 0.15s ease;
+}
+
+.field--check {
+  flex-direction: row;
+  align-items: flex-start;
+  gap: 10px;
+  font-size: 13px;
+  color: var(--muted);
+}
+.field--check input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+  min-width: 18px;
+  margin-top: 2px;
+  accent-color: var(--primary);
+}
+.field--check span {
+  font-size: 13px;
+  line-height: 1.45;
+}
+.field--check a {
+  color: var(--primary-2);
+  text-decoration: underline;
+}
+
+.cta__form {
+  min-width: 0;
+  max-width: 100%;
 }
 .field input:focus,
 .field select:focus {
@@ -740,6 +799,43 @@ a {
   color: var(--muted);
   margin: 0;
   text-align: center;
+}
+
+/* === Cookie banner === */
+.cookie {
+  position: fixed;
+  bottom: 16px;
+  left: 16px;
+  right: 16px;
+  z-index: 60;
+  background: rgba(17, 21, 31, 0.96);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: 0 20px 60px -20px rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(8px);
+}
+.cookie__inner {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 14px 20px;
+}
+.cookie p {
+  margin: 0;
+  font-size: 13px;
+  color: var(--muted);
+  flex: 1;
+}
+.cookie a {
+  color: var(--primary-2);
+  text-decoration: underline;
+}
+@media (max-width: 600px) {
+  .cookie__inner {
+    flex-direction: column;
+    align-items: stretch;
+    text-align: center;
+  }
 }
 
 /* === Footer === */

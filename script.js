@@ -19,7 +19,7 @@ document.querySelectorAll('.tariff a[href="#contact"]').forEach((link) => {
 document.querySelectorAll('[data-pay]').forEach((btn) => {
   btn.addEventListener('click', () => {
     const amount = Number(btn.dataset.amount);
-    const description = btn.dataset.description || 'Франшиза HonkVPN';
+    const description = btn.dataset.description || 'Франшиза HonkVPN — тариф';
     if (!amount || !window.cp || !window.cp.CloudPayments) return;
 
     const widget = new window.cp.CloudPayments();

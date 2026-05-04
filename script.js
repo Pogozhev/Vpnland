@@ -94,6 +94,34 @@ form?.addEventListener('submit', async (e) => {
   }
 });
 
+const burger = document.getElementById('burger');
+const mobileMenu = document.getElementById('mobileMenu');
+
+if (burger && mobileMenu) {
+  burger.addEventListener('click', () => {
+    const open = burger.getAttribute('aria-expanded') === 'true';
+    burger.setAttribute('aria-expanded', String(!open));
+    burger.setAttribute('aria-label', open ? 'Открыть меню' : 'Закрыть меню');
+    mobileMenu.hidden = open;
+    if (!open) {
+      requestAnimationFrame(() => mobileMenu.classList.add('open'));
+    } else {
+      mobileMenu.classList.remove('open');
+    }
+    document.body.style.overflow = open ? '' : 'hidden';
+  });
+
+  mobileMenu.querySelectorAll('a').forEach((link) => {
+    link.addEventListener('click', () => {
+      burger.setAttribute('aria-expanded', 'false');
+      burger.setAttribute('aria-label', 'Открыть меню');
+      mobileMenu.classList.remove('open');
+      setTimeout(() => { mobileMenu.hidden = true; }, 250);
+      document.body.style.overflow = '';
+    });
+  });
+}
+
 const cookieBanner = document.getElementById('cookieBanner');
 const cookieAccept = document.getElementById('cookieAccept');
 const COOKIE_KEY = 'honkvpn_cookie_consent';

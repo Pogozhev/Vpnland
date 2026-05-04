@@ -12,6 +12,8 @@
 </head>
 <body>
 
+  <a href="#main" class="skip-link">Перейти к содержимому</a>
+
   <svg xmlns="http://www.w3.org/2000/svg" style="display:none">
     <symbol id="ico-shield" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
       <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
@@ -54,11 +56,25 @@
         <a href="#how">Как стартовать</a>
         <a href="#faq">FAQ</a>
       </nav>
-      <a href="#tariffs" class="btn btn--primary btn--sm">Купить франшизу</a>
+      <a href="#tariffs" class="btn btn--primary btn--sm nav__cta">Купить франшизу</a>
+      <button class="burger" type="button" aria-label="Открыть меню" aria-expanded="false" id="burger">
+        <span></span><span></span><span></span>
+      </button>
     </div>
   </header>
 
-  <main>
+  <div class="mobile-menu" id="mobileMenu" hidden>
+    <nav class="mobile-menu__nav">
+      <a href="#why">Почему VPN</a>
+      <a href="#what">Что входит</a>
+      <a href="#tariffs">Тарифы</a>
+      <a href="#how">Как стартовать</a>
+      <a href="#faq">FAQ</a>
+      <a href="#tariffs" class="btn btn--primary btn--block">Купить франшизу</a>
+    </nav>
+  </div>
+
+  <main id="main">
     <section class="hero">
       <div class="hero__bg" aria-hidden="true"></div>
       <div class="container hero__inner">
@@ -101,7 +117,7 @@
               <span></span><span></span><span></span>
             </div>
             <div class="mock__row">
-              <div class="mock__chip"><span class="mock__dot mock__dot--green"></span> VPN online</div>
+              <div class="mock__chip"><span class="mock__dot mock__dot--accent"></span> VPN online</div>
               <div class="mock__chip"><span class="mock__dot mock__dot--blue"></span> Bot active</div>
             </div>
             <div class="mock__bar"><div class="mock__bar-fill"></div></div>

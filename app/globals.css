@@ -801,6 +801,64 @@ a {
   text-align: center;
 }
 
+/* === Pay email dialog === */
+.pay-dialog {
+  position: fixed;
+  inset: 0;
+  z-index: 70;
+  background: rgba(7, 9, 15, 0.7);
+  backdrop-filter: blur(6px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+.pay-dialog__inner {
+  width: 100%;
+  max-width: 420px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 24px;
+  box-shadow: var(--shadow);
+}
+.pay-dialog__title {
+  margin: 0 0 6px;
+  font-size: 19px;
+}
+.pay-dialog__sub {
+  margin: 0 0 16px;
+  font-size: 14px;
+  color: var(--muted);
+}
+.pay-dialog__input {
+  width: 100%;
+  background: var(--bg-2);
+  border: 1px solid var(--border);
+  color: var(--text);
+  border-radius: 10px;
+  padding: 12px 14px;
+  font-size: 15px;
+  font-family: inherit;
+  margin-bottom: 6px;
+}
+.pay-dialog__input:focus {
+  outline: none;
+  border-color: var(--primary);
+  background: #0a0e17;
+}
+.pay-dialog__error {
+  margin: 0 0 12px;
+  font-size: 13px;
+  color: var(--danger);
+}
+.pay-dialog__actions {
+  display: flex;
+  gap: 10px;
+  justify-content: flex-end;
+  margin-top: 14px;
+}
+
 /* === Cookie banner === */
 .cookie {
   position: fixed;

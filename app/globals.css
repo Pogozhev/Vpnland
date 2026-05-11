@@ -735,6 +735,8 @@ a {
   display: flex;
   flex-direction: column;
   gap: 14px;
+  min-width: 0;
+  max-width: 100%;
 }
 .field {
   display: flex;
@@ -784,10 +786,6 @@ a {
   text-decoration: underline;
 }
 
-.cta__form {
-  min-width: 0;
-  max-width: 100%;
-}
 .field input:focus,
 .field select:focus {
   outline: none;

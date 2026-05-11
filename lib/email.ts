@@ -40,8 +40,13 @@ export async function sendEmail({ to, subject, html, text }: EmailPayload) {
   await transporter.sendMail({ from, to, subject, html, text });
 }
 
-export function purchaseEmail(params: { description: string; amount: number; currency: string }) {
-  const { description, amount, currency } = params;
+export function purchaseEmail(params: {
+  description: string;
+  amount: number;
+  currency: string;
+  channelUrl: string | null;
+}) {
+  const { description, amount, currency, channelUrl } = params;
   const formattedAmount = new Intl.NumberFormat('ru-RU').format(amount);
   const date = new Intl.DateTimeFormat('ru-RU', {
     day: '2-digit',
@@ -49,12 +54,12 @@ export function purchaseEmail(params: { description: string; amount: number; cur
     year: 'numeric',
   }).format(new Date());
 
-  const supportEmail = process.env.EMAIL_FROM || 'info@honkvpn.com';
-
   const subject = `HonkVPN: оплата получена — ${description}`;
-  const preheader = 'Спасибо за покупку! В течение 30 минут с вами свяжется менеджер.';
+  const preheader = channelUrl
+    ? 'Спасибо за покупку! Вступайте в закрытый канал — там доступы и инструкции.'
+    : 'Спасибо за покупку! В течение 30 минут с вами свяжется менеджер.';
 
-  const text = [
+  const textLines = [
     'HonkVPN',
     '',
     'Спасибо за покупку!',
@@ -64,18 +69,56 @@ export function purchaseEmail(params: { description: string; amount: number; cur
     `  • Сумма: ${formattedAmount} ${currency}`,
     `  • Дата: ${date}`,
     '',
-    'Что дальше:',
-    '  1. В течение 30 минут с вами свяжется менеджер — уточнит детали и согласует запуск.',
-    '  2. Мы развернём инфраструктуру под ваш бренд: VPN-серверы, Telegram-бот, приём платежей.',
-    '  3. Передадим доступы, методичку по привлечению клиентов и подключим к чату сопровождения.',
-    '  4. Срок запуска — до 7 рабочих дней с момента оплаты.',
-    '',
-    `Если у вас остались вопросы — просто ответьте на это письмо или напишите на ${supportEmail}.`,
-    '',
-    'Команда HonkVPN',
-    '',
-    'Это письмо отправлено автоматически после оплаты на сайте. Если вы не совершали покупку — сообщите нам.',
-  ].join('\n');
+  ];
+  if (channelUrl) {
+    textLines.push(
+      'Дальнейшие шаги — в закрытом Telegram-канале вашего тарифа.',
+      `Вступить: ${channelUrl}`,
+      '',
+      'Там вы получите доступы, методичку по привлечению клиентов и поддержку команды.',
+      'В течение 30 минут с вами также свяжется менеджер.',
+    );
+  } else {
+    textLines.push(
+      'В течение 30 минут с вами свяжется менеджер — уточнит детали и согласует запуск.',
+      'Срок запуска инфраструктуры — до 7 рабочих дней с момента оплаты.',
+    );
+  }
+  textLines.push('', 'Команда HonkVPN', '', 'Это письмо отправлено автоматически после оплаты на сайте.');
+  const text = textLines.join('\n');
+
+  const channelBlock = channelUrl
+    ? `
+          <!-- CTA -->
+          <tr>
+            <td style="padding:24px 32px 0 32px;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;">
+              <p style="margin:0 0 12px;font-size:15px;line-height:1.55;color:#cfd5e3;">Дальнейшие шаги — в закрытом Telegram-канале вашего тарифа. Там доступы, методичка по привлечению клиентов и поддержка команды.</p>
+              <table role="presentation" cellpadding="0" cellspacing="0" border="0" style="margin:4px 0 8px;">
+                <tr>
+                  <td style="background:#5b8cff;border-radius:12px;">
+                    <a href="${channelUrl}" target="_blank" rel="noopener" style="display:inline-block;padding:13px 24px;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;font-size:15px;font-weight:600;color:#ffffff;text-decoration:none;">Вступить в Telegram-канал</a>
+                  </td>
+                </tr>
+              </table>
+              <p style="margin:8px 0 0;font-size:13px;color:#8a93a6;word-break:break-all;">Если кнопка не работает: <a href="${channelUrl}" target="_blank" rel="noopener" style="color:#7aa0ff;">${channelUrl}</a></p>
+            </td>
+          </tr>
+
+          <!-- secondary note -->
+          <tr>
+            <td style="padding:20px 32px 0 32px;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;">
+              <p style="margin:0;font-size:14px;line-height:1.55;color:#8a93a6;">В течение <strong style="color:#cfd5e3;">30 минут</strong> с вами также свяжется менеджер — уточнит детали и поможет с запуском.</p>
+            </td>
+          </tr>`
+    : `
+          <!-- next steps -->
+          <tr>
+            <td style="padding:24px 32px 0 32px;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;">
+              <p style="margin:0 0 12px;font-size:16px;font-weight:700;color:#e7ecf5;">Что дальше</p>
+              <p style="margin:0 0 12px;font-size:14px;line-height:1.55;color:#cfd5e3;">В течение <strong>30 минут</strong> с вами свяжется менеджер — уточнит детали и согласует запуск.</p>
+              <p style="margin:0;font-size:14px;line-height:1.55;color:#cfd5e3;">Срок запуска инфраструктуры — до <strong>7 рабочих дней</strong> с момента оплаты.</p>
+            </td>
+          </tr>`;
 
   const html = `<!doctype html>
 <html lang="ru" xmlns="http://www.w3.org/1999/xhtml">
@@ -141,45 +184,15 @@ export function purchaseEmail(params: { description: string; amount: number; cur
               </table>
             </td>
           </tr>
-
-          <!-- next steps -->
-          <tr>
-            <td style="padding:24px 32px 0 32px;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;">
-              <p style="margin:0 0 12px;font-size:16px;font-weight:700;color:#e7ecf5;">Что дальше</p>
-              <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
-                <tr>
-                  <td style="padding:0 0 14px 0;font-size:14px;line-height:1.55;color:#cfd5e3;"><strong style="color:#7aa0ff;">1.</strong>&nbsp;&nbsp;В течение <strong>30 минут</strong> с вами свяжется менеджер — уточнит детали и согласует запуск.</td>
-                </tr>
-                <tr>
-                  <td style="padding:0 0 14px 0;font-size:14px;line-height:1.55;color:#cfd5e3;"><strong style="color:#7aa0ff;">2.</strong>&nbsp;&nbsp;Развернём инфраструктуру под ваш бренд: VPN-серверы, Telegram-бот, приём платежей.</td>
-                </tr>
-                <tr>
-                  <td style="padding:0 0 14px 0;font-size:14px;line-height:1.55;color:#cfd5e3;"><strong style="color:#7aa0ff;">3.</strong>&nbsp;&nbsp;Передадим доступы, методичку по привлечению клиентов и подключим к чату сопровождения.</td>
-                </tr>
-                <tr>
-                  <td style="padding:0;font-size:14px;line-height:1.55;color:#cfd5e3;"><strong style="color:#7aa0ff;">4.</strong>&nbsp;&nbsp;Срок запуска — до <strong>7 рабочих дней</strong> с момента оплаты.</td>
-                </tr>
-              </table>
-            </td>
-          </tr>
-
-          <!-- support -->
-          <tr>
-            <td style="padding:24px 32px 0 32px;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;">
-              <p style="margin:0;font-size:14px;line-height:1.55;color:#8a93a6;">
-                Остались вопросы? Просто ответьте на это письмо или напишите на
-                <a href="mailto:${supportEmail}" style="color:#7aa0ff;text-decoration:underline;">${supportEmail}</a>.
-              </p>
-            </td>
-          </tr>
+${channelBlock}
 
           <!-- footer -->
           <tr>
             <td style="padding:28px 32px 28px 32px;">
-              <hr style="border:none;border-top:1px solid #1f2535;margin:0 0 16px 0;" />
+              <hr style="border:none;border-top:1px solid #1f2535;margin:24px 0 16px 0;" />
               <p style="margin:0 0 4px;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;font-size:13px;color:#8a93a6;">Команда HonkVPN</p>
               <p style="margin:0;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;font-size:12px;line-height:1.5;color:#5b6678;">
-                Это письмо отправлено автоматически после оплаты на сайте. Если вы не совершали покупку — сообщите нам по адресу выше.
+                Это письмо отправлено автоматически после оплаты на сайте.
               </p>
             </td>
           </tr>

@@ -43,11 +43,15 @@ type Props = {
   variant?: 'primary' | 'gold';
 };
 
+const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
 export default function PayButton({ amount, description, variant = 'primary' }: Props) {
   const [open, setOpen] = useState(false);
   const [email, setEmail] = useState('');
+  const [telegram, setTelegram] = useState('');
+  const [phone, setPhone] = useState('');
   const [error, setError] = useState('');
-  const inputRef = useRef<HTMLInputElement>(null);
+  const emailRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     loadWidget().catch(() => {});
@@ -56,22 +60,21 @@ export default function PayButton({ amount, description, variant = 'primary' }: 
   useEffect(() => {
     if (open) {
       setError('');
-      setTimeout(() => inputRef.current?.focus(), 50);
+      setTimeout(() => emailRef.current?.focus(), 50);
     }
   }, [open]);
 
   const publicId = process.env.NEXT_PUBLIC_CLOUDPAYMENTS_PUBLIC_ID;
 
   function startPayment() {
-    const trimmed = email.trim();
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(trimmed)) {
-      setError('Укажите корректный email');
-      return;
-    }
-    if (!publicId) {
-      setError('Платёжная система ещё не настроена.');
-      return;
-    }
+    const e = email.trim();
+    const tg = telegram.trim();
+    const ph = phone.trim();
+
+    if (!EMAIL_RE.test(e)) return setError('Укажите корректный email');
+    if (tg.length < 2) return setError('Укажите Telegram для связи');
+    if (!publicId) return setError('Платёжная система ещё не настроена.');
+
     setOpen(false);
     loadWidget()
       .then(() => {
@@ -85,12 +88,14 @@ export default function PayButton({ amount, description, variant = 'primary' }: 
             amount,
             currency: 'RUB',
             invoiceId: 'honkvpn-' + Date.now(),
-            email: trimmed,
+            accountId: e,
+            email: e,
+            data: { telegram: tg, phone: ph },
             skin: 'mini',
           },
           {
             onSuccess() {
-              alert(`Оплата прошла. Письмо отправили на ${trimmed}, мы свяжемся с вами для запуска.`);
+              alert(`Оплата прошла. Письмо с доступом отправили на ${e}.`);
             },
             onFail(reason: string) {
               if (reason && reason !== 'User has cancelled') {
@@ -104,6 +109,7 @@ export default function PayButton({ amount, description, variant = 'primary' }: 
   }
 
   const cls = variant === 'gold' ? 'btn btn--gold btn--block' : 'btn btn--primary btn--block';
+  const submitCls = variant === 'gold' ? 'btn btn--gold' : 'btn btn--primary';
 
   return (
     <>
@@ -113,18 +119,37 @@ export default function PayButton({ amount, description, variant = 'primary' }: 
 
       {open && (
         <div className="pay-dialog" role="dialog" aria-modal="true" onClick={() => setOpen(false)}>
-          <div className="pay-dialog__inner" onClick={(e) => e.stopPropagation()}>
-            <h3 className="pay-dialog__title">Email для чека и доступов</h3>
-            <p className="pay-dialog__sub">Сюда придёт чек об оплате и письмо с дальнейшими шагами.</p>
+          <div className="pay-dialog__inner" onClick={(ev) => ev.stopPropagation()}>
+            <h3 className="pay-dialog__title">Контакты для доступа</h3>
+            <p className="pay-dialog__sub">
+              На email придёт чек и письмо со ссылкой в закрытый канал. По Telegram и телефону с вами свяжется менеджер.
+            </p>
             <input
-              ref={inputRef}
+              ref={emailRef}
               type="email"
               inputMode="email"
               autoComplete="email"
-              placeholder="you@example.com"
+              placeholder="Email — you@example.com"
               value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              onKeyDown={(e) => e.key === 'Enter' && startPayment()}
+              onChange={(ev) => setEmail(ev.target.value)}
+              className="pay-dialog__input"
+            />
+            <input
+              type="text"
+              autoComplete="username"
+              placeholder="Telegram — @username"
+              value={telegram}
+              onChange={(ev) => setTelegram(ev.target.value)}
+              className="pay-dialog__input"
+            />
+            <input
+              type="tel"
+              inputMode="tel"
+              autoComplete="tel"
+              placeholder="Телефон — +7... (необязательно)"
+              value={phone}
+              onChange={(ev) => setPhone(ev.target.value)}
+              onKeyDown={(ev) => ev.key === 'Enter' && startPayment()}
               className="pay-dialog__input"
             />
             {error && <p className="pay-dialog__error">{error}</p>}
@@ -132,7 +157,7 @@ export default function PayButton({ amount, description, variant = 'primary' }: 
               <button type="button" className="btn btn--ghost" onClick={() => setOpen(false)}>
                 Отмена
               </button>
-              <button type="button" className={variant === 'gold' ? 'btn btn--gold' : 'btn btn--primary'} onClick={startPayment}>
+              <button type="button" className={submitCls} onClick={startPayment}>
                 Перейти к оплате
               </button>
             </div>

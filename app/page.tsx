@@ -2,6 +2,32 @@ import LeadForm from '@/components/LeadForm';
 import CookieBanner from '@/components/CookieBanner';
 import PayButton from '@/components/PayButton';
 
+const FEATURES = [
+  { ico: '🛡️', title: 'VPN-инфраструктура', text: 'Серверы по всему миру, протоколы VLESS/Shadowsocks, обход блокировок.' },
+  { ico: '💬', title: 'Telegram-бот', text: 'Продажа подписок, выдача ключей, чек-листы и автонапоминания.' },
+  { ico: '🌐', title: 'Лендинг', text: 'Готовый продающий сайт под ваш бренд с интеграцией платежей.' },
+  { ico: '🧰', title: 'Админ-панель', text: 'Подписки, выручка, серверы, клиенты — всё под рукой.' },
+  { ico: '💳', title: 'Приём платежей', text: 'Подключение эквайринга, СБП и крипты. Деньги идут напрямую вам.' },
+  { ico: '📚', title: 'Методичка по трафику', text: 'Готовые связки и креативы: Telegram Ads, посевы, Авито, SEO.' },
+  { ico: '🧠', title: 'Сопровождение', text: 'Чат с командой, ответы на вопросы и помощь со сложными кейсами.' },
+  { ico: '🔐', title: 'Ваш бренд', text: 'Никакого white-label с нашими лого. Бизнес — ваш на 100%.' },
+];
+
+const STEPS = [
+  { num: '01', title: 'Заявка', text: 'Оставляете контакты — мы звоним и подбираем тариф под ваши задачи.' },
+  { num: '02', title: 'Договор и оплата', text: 'Заключаем договор франчайзинга, фиксируем условия и сроки.' },
+  { num: '03', title: 'Развёртывание', text: 'Поднимаем серверы, бота, лендинг и админку под ваш бренд.' },
+  { num: '04', title: 'Запуск трафика', text: 'Передаём методичку и подключаем к чату сопровождения.' },
+];
+
+const FAQ = [
+  { q: 'Нужны ли технические знания?', a: 'Нет. Всё разворачиваем мы. От вас — продажи и работа с клиентами. Хотя если хотите глубже разобраться — научим.' },
+  { q: 'Через сколько окупится франшиза?', a: 'Средняя окупаемость «Базового» — 1–2 месяца, «Среднего» — 2–4 месяца. Зависит от бюджета на трафик.' },
+  { q: 'Кому идут деньги от подписок?', a: 'Вам. Платежи поступают на ваш расчётный счёт или ИП. Мы не берём роялти.' },
+  { q: 'Можно ли выйти на зарубежный рынок?', a: 'Да, инфраструктура поддерживает мультивалютность и серверы в разных регионах. Это обсуждается на тарифе VIP.' },
+  { q: 'Что, если у меня уже есть VPN-проект?', a: 'Тогда вам подойдёт консультация технического директора за 1 500 $. Поможем масштабировать и снизить расходы на инфру.' },
+];
+
 export default function HomePage() {
   const year = new Date().getFullYear();
 
@@ -124,14 +150,13 @@ export default function HomePage() {
             <h2 className="section__title">Что вы получаете</h2>
             <p className="section__lead">Это не «курс по запуску». Это работающий продукт, который мы передаём вам в эксплуатацию.</p>
             <div className="grid grid--4">
-              <div className="feat"><div className="feat__ico">🛡️</div><h4>VPN-инфраструктура</h4><p>Серверы по всему миру, протоколы VLESS/Shadowsocks, обход блокировок.</p></div>
-              <div className="feat"><div className="feat__ico">💬</div><h4>Telegram-бот</h4><p>Продажа подписок, выдача ключей, чек-листы и автонапоминания.</p></div>
-              <div className="feat"><div className="feat__ico">🌐</div><h4>Лендинг</h4><p>Готовый продающий сайт под ваш бренд с интеграцией платежей.</p></div>
-              <div className="feat"><div className="feat__ico">🧰</div><h4>Админ-панель</h4><p>Подписки, выручка, серверы, клиенты — всё под рукой.</p></div>
-              <div className="feat"><div className="feat__ico">💳</div><h4>Приём платежей</h4><p>Подключение эквайринга, СБП и крипты. Деньги идут напрямую вам.</p></div>
-              <div className="feat"><div className="feat__ico">📚</div><h4>Методичка по трафику</h4><p>Готовые связки и креативы: Telegram Ads, посевы, Авито, SEO.</p></div>
-              <div className="feat"><div className="feat__ico">🧠</div><h4>Сопровождение</h4><p>Чат с командой, ответы на вопросы и помощь со сложными кейсами.</p></div>
-              <div className="feat"><div className="feat__ico">🔐</div><h4>Ваш бренд</h4><p>Никакого white-label с нашими лого. Бизнес — ваш на 100%.</p></div>
+              {FEATURES.map((f) => (
+                <div className="feat" key={f.title}>
+                  <div className="feat__ico">{f.ico}</div>
+                  <h4>{f.title}</h4>
+                  <p>{f.text}</p>
+                </div>
+              ))}
             </div>
           </div>
         </section>
@@ -228,10 +253,13 @@ export default function HomePage() {
             <h2 className="section__title">Как стартовать</h2>
             <p className="section__lead">Понятный процесс без сюрпризов. От заявки до первой выручки — около недели.</p>
             <ol className="steps">
-              <li className="step"><span className="step__num">01</span><h4>Заявка</h4><p>Оставляете контакты — мы звоним и подбираем тариф под ваши задачи.</p></li>
-              <li className="step"><span className="step__num">02</span><h4>Договор и оплата</h4><p>Заключаем договор франчайзинга, фиксируем условия и сроки.</p></li>
-              <li className="step"><span className="step__num">03</span><h4>Развёртывание</h4><p>Поднимаем серверы, бота, лендинг и админку под ваш бренд.</p></li>
-              <li className="step"><span className="step__num">04</span><h4>Запуск трафика</h4><p>Передаём методичку и подключаем к чату сопровождения.</p></li>
+              {STEPS.map((s) => (
+                <li className="step" key={s.num}>
+                  <span className="step__num">{s.num}</span>
+                  <h4>{s.title}</h4>
+                  <p>{s.text}</p>
+                </li>
+              ))}
             </ol>
           </div>
         </section>
@@ -240,11 +268,12 @@ export default function HomePage() {
           <div className="container">
             <h2 className="section__title">Частые вопросы</h2>
             <div className="faq__list">
-              <details className="faq__item"><summary>Нужны ли технические знания?</summary><p>Нет. Всё разворачиваем мы. От вас — продажи и работа с клиентами. Хотя если хотите глубже разобраться — научим.</p></details>
-              <details className="faq__item"><summary>Через сколько окупится франшиза?</summary><p>Средняя окупаемость «Базового» — 1–2 месяца, «Среднего» — 2–4 месяца. Зависит от бюджета на трафик.</p></details>
-              <details className="faq__item"><summary>Кому идут деньги от подписок?</summary><p>Вам. Платежи поступают на ваш расчётный счёт или ИП. Мы не берём роялти.</p></details>
-              <details className="faq__item"><summary>Можно ли выйти на зарубежный рынок?</summary><p>Да, инфраструктура поддерживает мультивалютность и серверы в разных регионах. Это обсуждается на тарифе VIP.</p></details>
-              <details className="faq__item"><summary>Что, если у меня уже есть VPN-проект?</summary><p>Тогда вам подойдёт консультация технического директора за 1 500 $. Поможем масштабировать и снизить расходы на инфру.</p></details>
+              {FAQ.map((item) => (
+                <details className="faq__item" key={item.q}>
+                  <summary>{item.q}</summary>
+                  <p>{item.a}</p>
+                </details>
+              ))}
             </div>
           </div>
         </section>

@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server';
 import crypto from 'node:crypto';
 import { sendEmail, purchaseEmail } from '@/lib/email';
+import { escapeHtml, notifyOwner } from '@/lib/telegram';
 
 export const runtime = 'nodejs';
 
@@ -11,53 +12,12 @@ const TELEGRAM_CHANNELS: { match: string; url: string }[] = [
 ];
 
 function channelLinkFor(description: string): string | null {
-  const found = TELEGRAM_CHANNELS.find((c) => description.includes(c.match));
-  return found ? found.url : null;
-}
-
-function escapeHtml(s: string): string {
-  return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+  return TELEGRAM_CHANNELS.find((c) => description.includes(c.match))?.url ?? null;
 }
 
 const ok = () => NextResponse.json({ code: 0 });
 const fail = (message: string, status = 200) =>
   NextResponse.json({ code: 13, message }, { status });
-
-async function notifyOwner(parts: {
-  description: string;
-  amount: number;
-  currency: string;
-  email: string;
-  telegram: string;
-  phone: string;
-}) {
-  const token = process.env.TELEGRAM_BOT_TOKEN;
-  const chatId = process.env.TELEGRAM_CHAT_ID;
-  if (!token || !chatId) return;
-
-  const text =
-    `💰 <b>Новая оплата HonkVPN</b>\n\n` +
-    `💎 Тариф: <b>${escapeHtml(parts.description)}</b>\n` +
-    `💵 Сумма: <b>${new Intl.NumberFormat('ru-RU').format(parts.amount)} ${parts.currency}</b>\n` +
-    `📧 Email: <b>${escapeHtml(parts.email)}</b>\n` +
-    `✈️ Telegram: <b>${escapeHtml(parts.telegram || '—')}</b>\n` +
-    `📞 Телефон: <b>${escapeHtml(parts.phone || '—')}</b>`;
-
-  try {
-    await fetch(`https://api.telegram.org/bot${token}/sendMessage`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        chat_id: chatId,
-        text,
-        parse_mode: 'HTML',
-        disable_web_page_preview: true,
-      }),
-    });
-  } catch (err) {
-    console.error('owner_notify_failed', err);
-  }
-}
 
 export async function POST(req: Request) {
   const apiPassword = process.env.CLOUDPAYMENTS_API_PASSWORD;
@@ -92,7 +52,14 @@ export async function POST(req: Request) {
 
   if (status !== 'Completed') return ok();
 
-  await notifyOwner({ description, amount, currency, email, telegram, phone });
+  await notifyOwner(
+    `💰 <b>Новая оплата HonkVPN</b>\n\n` +
+      `💎 Тариф: <b>${escapeHtml(description)}</b>\n` +
+      `💵 Сумма: <b>${new Intl.NumberFormat('ru-RU').format(amount)} ${currency}</b>\n` +
+      `📧 Email: <b>${escapeHtml(email)}</b>\n` +
+      `✈️ Telegram: <b>${escapeHtml(telegram || '—')}</b>\n` +
+      `📞 Телефон: <b>${escapeHtml(phone || '—')}</b>`,
+  );
 
   if (email) {
     try {

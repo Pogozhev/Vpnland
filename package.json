@@ -8,7 +8,8 @@
     "build:ci": "next build",
     "start": "next start",
     "lint": "next lint",
-    "smoke": "tsx scripts/smoke-test.ts"
+    "smoke": "tsx scripts/smoke-test.ts",
+    "email:diagnose": "tsx scripts/email-diagnose.ts"
   },
   "dependencies": {
     "next": "^15.0.0",
